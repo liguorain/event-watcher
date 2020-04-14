@@ -103,4 +103,13 @@ const one = (type, callback, [useBuffer = false]) => {
   }, useBuffer);
 };
 
-export { emit, on, off, one }
+/**
+ * @const clearBuffer - 清空指定类型的事件缓存
+ * 
+ * @param {String} type - 事件类型
+ */
+const clearBuffer = type => {
+  delete eventBuf[type];
+};
+
+export { emit, on, off, one, clearBuffer }
