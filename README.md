@@ -61,3 +61,17 @@ off('load', 0);
 参数与 [on](#on) 方法一致。
 无返回值。
 使用与 [on](#on) 方法一致。
+
+#### clearBuffer
+清除指定的缓存事件
+参数 | 类型 | 必选 | 默认值 | 描述
+:-: | :-: | :-: | :-: | :-
+type | String | True | \- | 需要清除的事件类型
+
+#### mount
+批量监听事件回调合集。
+参数 | 类型 | 必选 | 默认值 | 描述
+:-: | :-: | :-: | :-: | :-
+eventSet | Object | True | \- | 事件回调键值对
+eventSet[type] | Array | False | \- | 某类型事件的回调合集
+eventSet[type][] | Function | False | \- | 事件回调函数
