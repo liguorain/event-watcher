@@ -20,6 +20,12 @@ const eventWatcher = () => {
     const eventSet = {
         authorize: []
     };
+    
+    /**
+     * mountedEventSet - 可卸载的事件回调合集
+     * @type {Object}
+     */
+    let mountedEventSet = null;
 
     /**
      * @const eventBuf - 对于监听前就可能发生的事件，缓存事件，设置监听时即触发回调
@@ -41,13 +47,56 @@ const eventWatcher = () => {
         Object.freeze(eventCopy);
 
         buffer && (eventBuf[type] = eventCopy);
+        
+        // 在此调用事件预处理扩增事件类型，并触发对应回调
 
         if (eventSet[type]) {
             eventSet[type].forEach(item => {
-                item && item(eventCopy);
+                item(eventCopy);
+            });
+        }
+        
+        // 向集体挂载的回调函数集推送事件
+        if(mountedEventSet && mountedEventSet[type]){
+            mountedEventSet[type].forEach(item => {
+                item(eventCopy);
             });
         }
     };
+    
+    /**
+     * mount - 挂载回调列表
+     * @param {Object} eventSetToMount
+     * @param {Array} eventSetToMount[]
+     */
+    const mount = eventSetToMount => {
+        mountedEventSet = eventSetToMount;
+    }
+    
+    /**
+     * unmount - 卸载事件
+     * @return mountedEventSet - 考虑到卸载方可能需要缓存，将回调函数集返回
+     * @desc 实际上这是为了可视化编辑器架构而留的钩子
+     */
+    const unmount = () => {
+        const temp = mountedEventSet;
+        mountedEventSet = null;
+        return mountedEventSet
+    }
+    
+    /**
+     * preProcessor - 事件预处理器
+     * @param {String} type
+     * @param {Object} event
+     */
+    const preProcessor = (type, event) => {
+        
+    }
+    
+    /**
+     *TODO preProcessorSet - 事件预处理器合集
+     */
+    const preProcessorSet = {};
 
     /**
      * @function on - 注册全局事件
@@ -119,7 +168,7 @@ const eventWatcher = () => {
         delete eventBuf[type];
     };
 
-    return { emit, on, off, one, clearBuffer }
+    return { emit, on, off, one, clearBuffer, mount, unmount }
 };
 
 // 初始化一个全局事件总线，以向后兼容
