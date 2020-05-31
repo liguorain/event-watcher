@@ -64,14 +64,69 @@ off('load', 0);
 
 #### clearBuffer
 清除指定的缓存事件
+
+##### 参数列表
 参数 | 类型 | 必选 | 默认值 | 描述
 :-: | :-: | :-: | :-: | :-
 type | String | True | \- | 需要清除的事件类型
 
+无返回值
+
+##### 示例
+```javascript
+clearBuffer('click');
+```
+
 #### mount
-批量监听事件回调合集。
+批量监听事件回调合集，注意同一时间内只能有一个挂载，后发的挂载会将现有的挂载替换，可能导致其内存被回收
+
+##### 参数列表
 参数 | 类型 | 必选 | 默认值 | 描述
 :-: | :-: | :-: | :-: | :-
 eventSet | Object | True | \- | 事件回调键值对
 eventSet[type] | Array | False | \- | 某类型事件的回调合集
 eventSet[type][] | Function | False | \- | 事件回调函数
+
+##### 无返回值
+
+##### 示例
+```javascript
+mount({
+   click: [
+      console.log,
+      console.warn
+   ],
+   mousemove: [
+      console.error,
+      () => console.log('mousemoving')
+   ]
+})
+```
+
+#### unmount 
+解除批量挂载的事件。
+
+##### 无参数
+
+##### 返回被卸载的事件回调集
+
+##### 示例
+```javascript
+console.log(unmount());
+/*
+打印如下内容：
+{
+   click: [
+      console.log,
+      console.warn
+   ],
+   mousemove: [
+      console.error,
+      () => console.log('mousemoving')
+   ]
+}
+
+*/
+```
+
+
