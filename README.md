@@ -129,4 +129,7 @@ console.log(unmount());
 */
 ```
 
+TODO: 
+1. Safe mode ，如果某一个回调抛错的话，势必会导致后面的所有订阅都失去效力。 
+
 
