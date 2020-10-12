@@ -10,6 +10,10 @@
 \-|\-|\-|\-|\-
 
 ##### 返回: Object，一个局部的 eventWatcher 对象，该对象拥有除 `eventWatcher` 以外的所有全局 API，并且各 eventWatcher 之间互不影响。
+##### 示例
+```javascript
+const watcher = eventWatcher;
+```
 
 #### emit
 向事件监听者发送事件(event)及事件类型(type)，这些信息会被分发给注册了同样类型的注册者。
