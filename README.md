@@ -12,7 +12,7 @@
 ##### 返回: Object，一个局部的 eventWatcher 对象，该对象拥有除 `eventWatcher` 以外的所有全局 API，并且各 eventWatcher 之间互不影响。
 ##### 示例
 ```javascript
-const watcher = eventWatcher;
+const watcher = eventWatcher();
 ```
 
 #### emit
